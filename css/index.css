@@ -36,6 +36,7 @@
   left: 50%;
   transform: translateX(-50%);
   top: 320px;
+  cursor: pointer;
 }
 .container>.start {
   background: linear-gradient(#e55c3d, #c50000);
@@ -50,6 +51,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
+  cursor: pointer;
 }
 .container>.rules-item,
 .container>.mask {
