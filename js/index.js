@@ -19,6 +19,7 @@ $('.mask > button').on('click', function () {
   $(this).parent().stop().fadeOut()
   progressHandler()
   startWolfAnimation()
+  $('.score').text('0')
 })
 
 
@@ -32,7 +33,7 @@ function progressHandler() {
   $('.progress').css('width', '180px')
   var timer = setInterval(function () {
     var progressWidth = $('.progress').width()
-    progressWidth -= 20
+    progressWidth -= 2
     $('.progress').css('width', progressWidth)
     if (progressWidth === 0) {
       $('.mask').stop().fadeIn()
@@ -67,11 +68,12 @@ function startWolfAnimation() {
     left: arrPos[positionIndex].left,
     top: arrPos[positionIndex].top
   })
-  var wolfIndex = 0
+  window.wolfIndex = 0
+  window.wolfIndexEnd = 5
   wolfTimer = setInterval(function () {
     $img.attr('src', wolfType[wolfIndex])
     wolfIndex += 1
-    if (wolfIndex > 5) {
+    if (wolfIndex > wolfIndexEnd) {
       $img.remove()
       clearInterval(wolfTimer)
       startWolfAnimation()
@@ -79,6 +81,24 @@ function startWolfAnimation() {
     console.log(wolfIndex);
   }, 200)
   $('.container').append($img)
+
+  gameRules($img)
+}
+
+function gameRules(element) {
+  element.one('click', function () {
+    window.wolfIndex = 5
+    window.wolfIndexEnd = 9
+    var $src = $(this).attr('src')
+    var flag = $src.indexOf('h') >= 0
+    var $score = parseInt($('.score').text())
+    console.log($score)
+    if (flag) {
+      $('.score').text($score += 10)
+    } else {
+      $('.score').text($score -= 10)
+    }
+  })
 }
 
 // 停止动画
